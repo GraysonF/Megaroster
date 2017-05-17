@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html class="no-js"> 
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title> Megaroster</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        
+       <h1> Megaroster </h1>
+
+       <div><form id = 'forms'>
+            <p>
+                <label for="personName"> Name</label>
+                <input type="text" name = "personName">
+                </p>
+                <p>
+                    <button type = "submit"> Go </button>
+                 </p>
+
+        </form></div>
+        <div class="details"></div>
+       <script>
+           {
+           let list = [];
+           const personForm = document.querySelector("form");
+           const details = document.querySelector('.details');
+           personForm.onsubmit = (ev) => {
+                ev.preventDefault();
+                const form = ev.target;
+
+                const val = form.personName.value;
+
+                if (val) {
+                    list.push(val);
+                    populate();
+                    form.personName.value = ""; //Clears input
+                }
+            
+    }
+     function populate() {
+        while (details.hasChildNodes()) {
+                details.removeChild(details.lastChild);
+        }
+        for (let i = list.length-1; i >= 0; i--) {
+            const div = document.createElement('div');
+            const li = document.createElement('li');
+            const prettyButton = document.createElement('button');
+            const button = document.createElement('button');
+            li.textContent = list[i];
+            button.textContent = "Remove";
+            button.id = i;
+            prettyButton.textContent = "Prettify";
+            div.appendChild(li);
+            div.appendChild(button);
+            div.appendChild(prettyButton);
+            details.appendChild(div);
+            button.addEventListener('click', (ev) => {
+            details.removeChild(ev.target.parentNode);
+            console.log(button.id);
+            if (button.id > -1) {
+                 list.splice(button.id, 1);
+                 console.log(list);
+            }
+            
+
+            //console.log(ev.target.parentNode);
+            //list.splice()
+            //Might just want to make a div
+});
+            prettyButton.addEventListener('click', (ev) => {
+                const li = ev.target.parentNode.querySelector('li');
+                li.style.backgroundColor = 'cyan';
+                li.style.color = 'white';
+            });
+        }
+     }
+
+    
+           }
+        
+        </script>
+       
+    </body>
+</html>
